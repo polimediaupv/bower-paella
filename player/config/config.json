@@ -137,13 +137,13 @@
                 "enabled": false
             },
             "es.upv.paella.blackBoardPlugin": {
-                "enable": true
+                "enabled": true
             },
             "es.upv.paella.breaksPlayerPlugin": {
-                "enable": true
+                "enabled": true
             },
             "es.upv.paella.overlayCaptionsPlugin": {
-                "enable": true
+                "enabled": true
             },
             "es.upv.paella.playButtonOnScreenPlugin": {
                 "enabled": true
@@ -156,6 +156,9 @@
             },
             "es.upv.paella.trimmingPlayerPlugin": {
                 "enabled": true
+            },
+            "es.upv.paella.zoomPlugin": {
+                "enabled": false
             },
             "es.upv.paella.captions.DFXPParserPlugin": {
                 "enabled": true
