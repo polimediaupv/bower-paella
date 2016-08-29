@@ -1,8 +1,9 @@
 {
     "player": {
+        "accessControlClass": "paella.AccessControl",
         "profileFrameStrategy": "paella.ProfileFrameStrategy",
         "videoQualityStrategy": "paella.BestFitVideoQualityStrategy",
-        "methods": [
+        "deprecated-methods": [
             {
                 "name": "streaming",
                 "enabled": true
@@ -20,6 +21,32 @@
                 "enabled": true
             }
         ],
+        "methods": [
+            {
+                "factory": "Html5VideoFactory",
+                "enabled": true
+            },
+            {
+                "factory": "MpegDashVideoFactory",
+                "enabled": true
+            },
+            {
+                "factory": "RTMPVideoFactory",
+                "enabled": true
+            },
+            {
+                "factory": "HLSVideoFactory",
+                "enabled": true
+            },
+            {
+                "factory": "ImageVideoFactory",
+                "enabled": true
+            },
+            {
+                "factory": "YoutubeVideoFactory",
+                "enabled": true
+            }
+        ],
         "audio": {
             "master": 1,
             "slave": 0
@@ -27,6 +54,10 @@
         "rtmpSettings": {
             "bufferTime": 5,
             "requiresSubscription": false
+        },
+        "slidesMarks": {
+            "enabled": true,
+            "color": "gray"
         }
     },
     "editor": {
@@ -38,8 +69,17 @@
         "dataDelegates": {
             "default": "CookieDataDelegate",
             "trimming": "CookieDataDelegate",
-            "userInfo": "UserDataDelegate"
+            "userInfo": "UserDataDelegate",
+            "visualAnnotations": "VisualAnnotationsDataDelegate"
         }
+    },
+    "folders": {
+        "profiles": "config/profiles",
+        "resources": "resources",
+        "skins": "resources/style"
+    },
+    "experimental": {
+        "autoplay": true
     },
     "plugins": {
         "enablePluginsByDefault": false,
@@ -87,6 +127,7 @@
                 ]
             },
             "es.upv.paella.multipleQualitiesPlugin": {
+                "enabled": true,
                 "showWidthRes": true
             },
             "es.upv.paella.playbackRatePlugin": {
@@ -120,7 +161,11 @@
                 "showMasterVolume": true,
                 "showSlaveVolume": false
             },
-            "es.upv.paella.liveStramingIndicator": {
+            "es.upv.paella.visualAnnotationPlugin": {
+                "enabled": true,
+                "url": "https://media.upv.es/rest/video/"
+            },
+            "es.upv.paella.liveStreamingIndicatorPlugin": {
                 "enabled": true
             },
             "es.upv.paella.showEditorPlugin": {
@@ -160,6 +205,9 @@
             "es.upv.paella.zoomPlugin": {
                 "enabled": false
             },
+            "es.upv.paella.windowTitlePlugin": {
+                "enabled": true
+            },
             "es.upv.paella.captions.DFXPParserPlugin": {
                 "enabled": true
             },
@@ -192,7 +240,7 @@
         }
     },
     "standalone": {
-        "reposiroty": "../repository/"
+        "repository": "../repository/"
     },
     "skin": {
         "default": "dark",

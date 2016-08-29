@@ -1,0 +1,30 @@
+{
+	"metadata": {
+		"duration": 0,
+		"title": "RTMPS Test"
+	},
+	"streams": [
+		{
+			"sources": {
+				"rtmp": [
+					{
+						"src": {
+							"server":"rtmps://oc-media.uni-koeln.de/matterhorn-test/",
+							"stream":"mp4:engage-player/73aeac41-d441-42de-993a-1f5ad470a4b6/67027c98-adcf-4543-981e-5e5deba4c2ac/trailer"
+						},
+						"mimetype": "video/x-flv",
+						"res": {
+							"w": "720",
+							"h": "576"
+						}
+					}
+				]
+			},
+			"preview": ""
+		}
+	],
+	"frameList": [],
+	"blackboard": {
+		"frames": []
+	}
+}
