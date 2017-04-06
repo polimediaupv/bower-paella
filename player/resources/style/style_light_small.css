@@ -18,7 +18,7 @@ a:active {
 a:visited {
   color: #636363;
 }
-.video {
+video {
   -moz-box-shadow: 2px 2px 6px #000;
   -webkit-box-shadow: 2px 2px 6px #000;
   box-shadow: 2px 2px 6px #000;
@@ -587,6 +587,12 @@ a.btn {
   position: absolute;
   border: 1px dotted white;
 }
+.lensContainer img {
+  width: 100% !important;
+}
+#overlayContainer div.lensContainer {
+  pointer-events: all;
+}
 .textBreak {
   background-color: rgba(128, 128, 128, 0.7);
   text-align: center;
@@ -799,6 +805,30 @@ textarea {
   display: inline-block;
   margin-left: 3px;
 }
+.editorPluginToolStatusHelp,
+.editorPluginConsolidateHelp {
+  position: absolute;
+  height: 113px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  overflow: auto;
+}
+.editorPluginToolStatus_trackItemList,
+.editorPluginConsolidate_trackItemList {
+  position: absolute;
+  overflow: auto;
+  bottom: 123px;
+  top: 65px;
+  left: 10px;
+  right: 10px;
+  box-shadow: inset 0px 0px 10px 2px rgba(0, 0, 0, 0.39);
+  border-radius: 7px;
+  padding-left: 13px;
+}
+.trackEditorFieldSelected {
+  background-color: red;
+}
 .buttonPlugin.extendedTabAdapterPlugin {
   background-position: -500% -200%;
 }
@@ -868,30 +898,6 @@ textarea {
 }
 .extendedTabAdapterPlugin > .tabsPluginContainer > .tabsContentContainer > .tabContent.disabled {
   display: none;
-}
-.editorPluginToolStatusHelp,
-.editorPluginConsolidateHelp {
-  position: absolute;
-  height: 113px;
-  left: 10px;
-  right: 10px;
-  bottom: 10px;
-  overflow: auto;
-}
-.editorPluginToolStatus_trackItemList,
-.editorPluginConsolidate_trackItemList {
-  position: absolute;
-  overflow: auto;
-  bottom: 123px;
-  top: 65px;
-  left: 10px;
-  right: 10px;
-  box-shadow: inset 0px 0px 10px 2px rgba(0, 0, 0, 0.39);
-  border-radius: 7px;
-  padding-left: 13px;
-}
-.trackEditorFieldSelected {
-  background-color: red;
 }
 .buttonPlugin.footPrints {
   background-position: -700% 0%;
