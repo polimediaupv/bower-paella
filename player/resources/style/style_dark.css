@@ -18,7 +18,7 @@ a:active {
 a:visited {
   color: #636363;
 }
-video {
+.video {
   -moz-box-shadow: 2px 2px 6px #000;
   -webkit-box-shadow: 2px 2px 6px #000;
   box-shadow: 2px 2px 6px #000;
@@ -712,6 +712,37 @@ a.btn {
   color: #FF4C4C;
   font-weight: bold;
 }
+.snapShotsEditorPluginBox {
+  width: 100%;
+  height: 100%;
+  background-size: auto 100%;
+  background: #9fa658;
+  /* Old browsers */
+  background: -moz-linear-gradient(left, #9fa658 0%, #e3e8a2 50%, #9fa658 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%, #9fa658), color-stop(50%, #e3e8a2), color-stop(100%, #9fa658));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left, #9fa658 0%, #e3e8a2 50%, #9fa658 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left, #9fa658 0%, #e3e8a2 50%, #9fa658 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(left, #9fa658 0%, #e3e8a2 50%, #9fa658 100%);
+  /* IE10+ */
+  background: linear-gradient(to right, #9fa658 0%, #e3e8a2 50%, #9fa658 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#9fa658', endColorstr='#9fa658', GradientType=1);
+  /* IE6-9 */
+}
+.snapShotsEditorPluginImage {
+  display: inline-block;
+  width: auto;
+  height: 100%;
+  margin-top: -3px;
+}
+.snapShotsEditorPluginSliteText {
+  display: inline-block;
+  margin-left: 3px;
+}
 #CommentPlugin_Publish_entry_buttons_area {
   margin-top: 5px;
 }
@@ -773,37 +804,6 @@ textarea {
 .reply_button:hover {
   color: #438bc5;
   text-decoration: underline;
-}
-.snapShotsEditorPluginBox {
-  width: 100%;
-  height: 100%;
-  background-size: auto 100%;
-  background: #9fa658;
-  /* Old browsers */
-  background: -moz-linear-gradient(left, #9fa658 0%, #e3e8a2 50%, #9fa658 100%);
-  /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, right top, color-stop(0%, #9fa658), color-stop(50%, #e3e8a2), color-stop(100%, #9fa658));
-  /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(left, #9fa658 0%, #e3e8a2 50%, #9fa658 100%);
-  /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(left, #9fa658 0%, #e3e8a2 50%, #9fa658 100%);
-  /* Opera 11.10+ */
-  background: -ms-linear-gradient(left, #9fa658 0%, #e3e8a2 50%, #9fa658 100%);
-  /* IE10+ */
-  background: linear-gradient(to right, #9fa658 0%, #e3e8a2 50%, #9fa658 100%);
-  /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#9fa658', endColorstr='#9fa658', GradientType=1);
-  /* IE6-9 */
-}
-.snapShotsEditorPluginImage {
-  display: inline-block;
-  width: auto;
-  height: 100%;
-  margin-top: -3px;
-}
-.snapShotsEditorPluginSliteText {
-  display: inline-block;
-  margin-left: 3px;
 }
 .editorPluginToolStatusHelp,
 .editorPluginConsolidateHelp {
