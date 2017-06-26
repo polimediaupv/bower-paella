@@ -572,6 +572,14 @@ a.btn {
   padding-bottom: 10px;
   border-radius: 12px;
 }
+.buttonPlugin.arrowSlideNavidator.nextButton {
+  background-position: -1500% -100%;
+  pointer-events: all !important;
+}
+.buttonPlugin.arrowSlideNavidator.prevButton {
+  background-position: -1600% -100%;
+  pointer-events: all !important;
+}
 .buttonPlugin.audioLanguages {
   text-align: center;
   background-position: -900% -200%;
@@ -608,14 +616,6 @@ a.btn {
 }
 #overlayContainer div.lensContainer {
   pointer-events: all;
-}
-.buttonPlugin.arrowSlideNavidator.nextButton {
-  background-position: -1500% -100%;
-  pointer-events: all !important;
-}
-.buttonPlugin.arrowSlideNavidator.prevButton {
-  background-position: -1600% -100%;
-  pointer-events: all !important;
 }
 .textBreak {
   background-color: rgba(128, 128, 128, 0.7);
