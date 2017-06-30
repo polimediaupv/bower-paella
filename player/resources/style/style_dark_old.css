@@ -853,6 +853,21 @@ textarea {
 .trackEditorFieldSelected {
   background-color: red;
 }
+.buttonPlugin.footPrints {
+  background-position: -700% 0%;
+}
+.footPrintsContainer {
+  height: 20px;
+  width: 100%;
+  overflow: hidden;
+  display: block;
+}
+.footPrintsCanvas {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: inline-block;
+}
 .buttonPlugin.extendedTabAdapterPlugin {
   background-position: -500% -200%;
 }
@@ -923,20 +938,11 @@ textarea {
 .extendedTabAdapterPlugin > .tabsPluginContainer > .tabsContentContainer > .tabContent.disabled {
   display: none;
 }
-.buttonPlugin.footPrints {
-  background-position: -700% 0%;
+.buttonPlugin.showFullScreenButton {
+  background-position: -900% 0%;
 }
-.footPrintsContainer {
-  height: 20px;
-  width: 100%;
-  overflow: hidden;
-  display: block;
-}
-.footPrintsCanvas {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  display: inline-block;
+.buttonPlugin.showFullScreenButton.active {
+  background-position: -1000% 0%;
 }
 .buttonPlugin.frameControl {
   background-position: -1200% -100%;
@@ -1064,12 +1070,6 @@ textarea {
 }
 .enabledFrameThumbnail:hover {
   border: 3px #fa8533 solid;
-}
-.buttonPlugin.showFullScreenButton {
-  background-position: -900% 0%;
-}
-.buttonPlugin.showFullScreenButton.active {
-  background-position: -1000% 0%;
 }
 .buttonPlugin.helpButton {
   background-position: -1300% 0%;
@@ -1582,6 +1582,52 @@ svg rect {
 .viewModeItemButton.chroma {
   background-position: 80px -360px;
 }
+.buttonPlugin.volumeRangeButton.mute {
+  background-position: -300% 0%;
+}
+.buttonPlugin.volumeRangeButton.max {
+  background-position: -600% 0%;
+}
+.buttonPlugin.volumeRangeButton.med {
+  background-position: -500% 0%;
+}
+.buttonPlugin.volumeRangeButton.min {
+  background-position: -400% 0%;
+}
+.buttonPluginPopUp.volumeRangeButton {
+  position: absolute;
+  /* right: -220px; */
+}
+.videoRangeContainer {
+  width: 260px;
+}
+.videoRangeContainer .range {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  /*display: -moz-flex; */
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -ms-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center;
+}
+.videoRangeContainer .range .image {
+  background-image: url(../images/paella_icons_light.png);
+  width: 40px;
+  height: 40px;
+  background-size: 800px 400px;
+}
+.videoRangeContainer .range .image.master {
+  background-position: -740px -40px;
+}
+.videoRangeContainer .range .image.slave {
+  background-position: -740px 0px;
+}
 .annotationiframe {
   width: 100%;
   height: 65vh;
@@ -1782,52 +1828,6 @@ svg rect {
   position: absolute;
   top: 5px;
   right: 10px;
-}
-.buttonPlugin.volumeRangeButton.mute {
-  background-position: -300% 0%;
-}
-.buttonPlugin.volumeRangeButton.max {
-  background-position: -600% 0%;
-}
-.buttonPlugin.volumeRangeButton.med {
-  background-position: -500% 0%;
-}
-.buttonPlugin.volumeRangeButton.min {
-  background-position: -400% 0%;
-}
-.buttonPluginPopUp.volumeRangeButton {
-  position: absolute;
-  /* right: -220px; */
-}
-.videoRangeContainer {
-  width: 260px;
-}
-.videoRangeContainer .range {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  /*display: -moz-flex; */
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -moz-box-align: center;
-  -ms-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
-  -moz-align-items: center;
-  align-items: center;
-}
-.videoRangeContainer .range .image {
-  background-image: url(../images/paella_icons_light.png);
-  width: 40px;
-  height: 40px;
-  background-size: 800px 400px;
-}
-.videoRangeContainer .range .image.master {
-  background-position: -740px -40px;
-}
-.videoRangeContainer .range .image.slave {
-  background-position: -740px 0px;
 }
 .buttonPlugin.zoomButton {
   background-position: -280px -40px;
