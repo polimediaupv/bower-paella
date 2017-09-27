@@ -570,6 +570,23 @@ a.btn {
   background-position: -1600% -100%;
   pointer-events: all !important;
 }
+.buttonPlugin.audioLanguages {
+  text-align: center;
+  background-position: -900% -200%;
+  font-size: 0.8em;
+  line-height: 20px;
+  color: black;
+  text-transform: uppercase;
+}
+.videoAudioTrackItem {
+  padding: 10px;
+  font-size: 20px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.videoAudioTrackItem:hover {
+  background-color: #cc0000;
+}
 .blackBoardDiv {
   position: absolute;
   /* 16:9 */
@@ -589,23 +606,6 @@ a.btn {
 }
 #overlayContainer div.lensContainer {
   pointer-events: all;
-}
-.buttonPlugin.audioLanguages {
-  text-align: center;
-  background-position: -900% -200%;
-  font-size: 0.8em;
-  line-height: 20px;
-  color: black;
-  text-transform: uppercase;
-}
-.videoAudioTrackItem {
-  padding: 10px;
-  font-size: 20px;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-.videoAudioTrackItem:hover {
-  background-color: #cc0000;
 }
 .textBreak {
   background-color: rgba(128, 128, 128, 0.7);
@@ -858,6 +858,21 @@ textarea {
 .extendedTabAdapterPlugin > .tabsPluginContainer > .tabsContentContainer > .tabContent.disabled {
   display: none;
 }
+.buttonPlugin.footPrints {
+  background-position: -700% 0%;
+}
+.footPrintsContainer {
+  height: 20px;
+  width: 100%;
+  overflow: hidden;
+  display: block;
+}
+.footPrintsCanvas {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: inline-block;
+}
 .buttonPlugin.frameControl {
   background-position: -1200% -100%;
 }
@@ -984,21 +999,6 @@ textarea {
 }
 .enabledFrameThumbnail:hover {
   border: 3px #fa8533 solid;
-}
-.buttonPlugin.footPrints {
-  background-position: -700% 0%;
-}
-.footPrintsContainer {
-  height: 20px;
-  width: 100%;
-  overflow: hidden;
-  display: block;
-}
-.footPrintsCanvas {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  display: inline-block;
 }
 .buttonPlugin.showFullScreenButton {
   background-position: -900% 0%;
@@ -1127,60 +1127,6 @@ textarea {
 .rateButtons .starButton:first-of-type {
   margin-left: 19px;
 }
-.buttonPlugin.showSocialPluginButton {
-  background-position: -800% 0%;
-}
-.buttonPluginPopUp.showSocialPluginButton {
-  background-image: none;
-}
-.socialItemButton {
-  /*crea el popup*/
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  background-image: url(../images/paella_icons_dark.png);
-  background-size: 2000% 1000%;
-  background-position: 0px 0px;
-}
-.socialItemButton.selected {
-  /*background-color: rgba(90,90,90,0.8);
-	border: 3px solid #23ff00;*/
-  background-color: rgba(90, 90, 90, 0.8);
-  box-shadow: inset 0px 0px 2px 2px #fa8533;
-}
-.socialItemButton:hover {
-  background-color: #faa166;
-}
-.socialItemButton.facebook {
-  background-position: -1600% 0%;
-}
-.socialItemButton.twitter {
-  background-position: -1400% 0%;
-}
-.socialItemButton.embed {
-  background-position: -1500% 0%;
-}
-.embedSizeButton {
-  display: inline-block;
-  background-color: #fa8533;
-  border: 1px solid #313135;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-right: 5px;
-  vertical-align: middle;
-  font-size: 14px;
-  text-align: center;
-  color: white;
-}
-.embedSizeInput {
-  background-color: #ffffff;
-  width: 40px;
-  height: 20px;
-  color: #000000;
-  font-size: 12px;
-  margin: 0px;
-  padding: 0px;
-}
 .buttonPlugin.searchButton {
   background-size: 2000% 1000%;
   background-position: -900% -100%;
@@ -1277,6 +1223,60 @@ svg rect {
 }
 .noResults {
   margin: 5px;
+}
+.buttonPlugin.showSocialPluginButton {
+  background-position: -800% 0%;
+}
+.buttonPluginPopUp.showSocialPluginButton {
+  background-image: none;
+}
+.socialItemButton {
+  /*crea el popup*/
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  background-image: url(../images/paella_icons_dark.png);
+  background-size: 2000% 1000%;
+  background-position: 0px 0px;
+}
+.socialItemButton.selected {
+  /*background-color: rgba(90,90,90,0.8);
+	border: 3px solid #23ff00;*/
+  background-color: rgba(90, 90, 90, 0.8);
+  box-shadow: inset 0px 0px 2px 2px #fa8533;
+}
+.socialItemButton:hover {
+  background-color: #faa166;
+}
+.socialItemButton.facebook {
+  background-position: -1600% 0%;
+}
+.socialItemButton.twitter {
+  background-position: -1400% 0%;
+}
+.socialItemButton.embed {
+  background-position: -1500% 0%;
+}
+.embedSizeButton {
+  display: inline-block;
+  background-color: #fa8533;
+  border: 1px solid #313135;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-right: 5px;
+  vertical-align: middle;
+  font-size: 14px;
+  text-align: center;
+  color: white;
+}
+.embedSizeInput {
+  background-color: #ffffff;
+  width: 40px;
+  height: 20px;
+  color: #000000;
+  font-size: 12px;
+  margin: 0px;
+  padding: 0px;
 }
 .videoLoadTest {
   background-color: #ffcc66;
@@ -1450,7 +1450,10 @@ svg rect {
   }
 }
 .buttonPlugin.videoZoomToolbar {
-  background-position: -700% -100%;
+  background-position: -600% -100%;
+  font-size: 0.8em;
+  padding-top: 9px;
+  text-align: center;
 }
 .videoZoomToolbarItem {
   width: 30px;
@@ -1558,6 +1561,100 @@ svg rect {
 }
 .videoRangeContainer .range .image.slave {
   background-position: -740px 0px;
+}
+input[type=range] {
+  -webkit-appearance: none;
+  margin: 18px 0;
+  width: 100%;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-moz-focus-outer {
+  border: 0;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #cc0000;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 32px;
+  width: 16px;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -14px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #bb0000;
+  outline: none;
+}
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #cc0000;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+input[type=range]::-moz-range-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 32px;
+  width: 16px;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+}
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: transparent;
+  border-color: transparent;
+  border-width: 16px 0;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: #cc0000;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type=range]::-ms-fill-upper {
+  background: #cc0000;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type=range]::-ms-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 32px;
+  width: 16px;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: #cc0000;
+  outline: none;
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: #cc0000;
+  outline: none;
 }
 .buttonPlugin.zoomButton {
   background-position: -280px -40px;
