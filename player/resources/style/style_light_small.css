@@ -587,16 +587,6 @@ a.btn {
 .videoAudioTrackItem:hover {
   background-color: #cc0000;
 }
-.textBreak {
-  background-color: rgba(128, 128, 128, 0.7);
-  text-align: center;
-  color: white;
-  line-height: 17px;
-  font-size: 18px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-radius: 12px;
-}
 .blackBoardDiv {
   position: absolute;
   /* 16:9 */
@@ -616,6 +606,16 @@ a.btn {
 }
 #overlayContainer div.lensContainer {
   pointer-events: all;
+}
+.textBreak {
+  background-color: rgba(128, 128, 128, 0.7);
+  text-align: center;
+  color: white;
+  line-height: 17px;
+  font-size: 18px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 12px;
 }
 .buttonPlugin.captionsPluginButton {
   background-position: 0% -100%;
