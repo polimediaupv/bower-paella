@@ -570,6 +570,13 @@ a.btn {
   background-position: -1600% -100%;
   pointer-events: all !important;
 }
+.arrow-slide-navigator-container {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+}
 .buttonPlugin.audioLanguages {
   text-align: center;
   background-position: -900% -200%;
