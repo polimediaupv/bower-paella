@@ -5,7 +5,7 @@ var GlobalParams = {
 };
 var paella = {};
 paella.player = null;
-paella.version = "5.2.9 - build: 6065ee5";
+paella.version = "5.2.9 - build: 6e0823f";
 paella.events = {
   play: "paella:play",
   pause: "paella:pause",
