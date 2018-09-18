@@ -129,6 +129,9 @@ i.button-icon.icon-screen {
   background-color: #fa8533;
   background: #fa8533;
 }
+.playbackBarFull.disabled {
+  opacity: 0.2;
+}
 .buttonPlugin {
   width: 20px;
   height: 20px;
@@ -235,6 +238,10 @@ i.button-icon.icon-screen {
   background-color: rgba(0, 0, 0, 0.5);
 }
 .messageContainer {
+  width: 95%;
+  height: 95%;
+  margin-top: 2%;
+  position: relative;
   margin: auto;
   text-align: center;
   vertical-align: middle;
@@ -242,13 +249,17 @@ i.button-icon.icon-screen {
   padding-left: 80px;
   padding-right: 80px;
   background-color: white;
-  border-radius: 22px;
-  box-shadow: 1px 1px 8px black;
+  border-radius: 2px;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.29);
   font-size: 20px;
   padding-top: 40px;
   padding-bottom: 40px;
 }
 .frameContainer {
+  width: 95%;
+  height: 95%;
+  margin-top: 2%;
+  position: relative;
   margin: auto;
   text-align: center;
   /*vertical-align: middle;*/
@@ -256,22 +267,26 @@ i.button-icon.icon-screen {
   padding-left: 80px;
   padding-right: 80px;
   background-color: white;
-  border-radius: 22px;
-  box-shadow: 1px 1px 8px black;
+  border-radius: 2px;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.29);
   font-size: 20px;
   padding-top: 40px;
   padding-bottom: 40px;
   display: block;
 }
 .errorContainer {
+  width: 55%;
+  height: 55%;
+  margin-top: 22%;
+  position: relative;
   margin: auto;
   text-align: center;
   vertical-align: middle;
   padding-left: 120px;
   padding-right: 60px;
   background-color: white;
-  border-radius: 22px;
-  box-shadow: 1px 1px 8px black;
+  border-radius: 2px;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.29);
   font-family: sans-serif;
   font-size: 20px;
   padding-top: 40px;
@@ -377,7 +392,7 @@ video::-webkit-media-controls-enclosure {
   overflow: hidden;
 }
 video::-webkit-media-controls-panel {
-  width: calc(108%);
+  width: calc(100% + 8px);
   /* Adjust as needed */
 }
 /* TODO: Extract this CSS to editor plugins */
@@ -2276,7 +2291,7 @@ a.btn {
   bottom: 0px;
   right: 0px;
 }
-.buttonPlugin.audioLanguages {
+.buttonPlugin.audioTags {
   text-align: center;
   background-position: -900% -200%;
   font-size: 0.8em;
@@ -2289,6 +2304,10 @@ a.btn {
   font-size: 20px;
   text-transform: uppercase;
   cursor: pointer;
+}
+.videoAudioTrackItem.selected {
+  background-color: rgba(211, 211, 211, 0.8);
+  box-shadow: inset 0px 0px 2px 2px #fa8533;
 }
 .videoAudioTrackItem:hover {
   background-color: #cc0000;
@@ -2607,10 +2626,10 @@ textarea {
   background-position: -1500% -100%;
 }
 .frameControl.navButton.left:hover {
-  opacity: 1.0;
+  opacity: 1;
 }
 .frameControl.navButton.right:hover {
-  opacity: 1.0;
+  opacity: 1;
 }
 .frameControlContent {
   height: 100px;
@@ -2768,7 +2787,7 @@ textarea {
   left: 0;
   bottom: 51px;
   right: 0;
-  z-index: 500;
+  z-index: 50;
   width: 100%;
   height: 100%;
 }
@@ -3098,6 +3117,7 @@ svg rect {
   box-shadow: 0px 0px 3px 0px black;
   border-radius: 2px;
   position: relative;
+  right: 0px;
 }
 .zoom-rect {
   background-color: rgba(255, 255, 255, 0.5);
@@ -3134,7 +3154,7 @@ svg rect {
 }
 @media (max-width: 600px) {
   .buttonPlugin.right.videoZoom {
-    width: 50px;
+    width: 89px;
   }
   .zoom-container {
     width: 80px;
@@ -3169,16 +3189,17 @@ svg rect {
   background-image: url(../images/paella_icons_dark.png);
   width: 80px;
   height: 40px;
-  background-size: 800px 400px;
   cursor: pointer;
-  background-position: 80px 0px;
+  background-size: 100% 100% !important;
+  background-position: 0px 0px ! important;
+  background-color: white;
 }
 .viewModeItemButton:hover {
   background-color: #faa166;
 }
 .viewModeItemButton.selected {
   /*background-position: 78px 0;*/
-  background-color: rgba(90, 90, 90, 0.8);
+  background-color: rgba(211, 211, 211, 0.8);
   box-shadow: inset 0px 0px 2px 2px #fa8533;
 }
 .viewModeItemButton.slide_professor {
@@ -3437,6 +3458,18 @@ input[type=range]:focus::-ms-fill-upper {
   background-size: 500px 250px;
   margin-right: 2px;
 }
+.paella-profile-button {
+  background-color: lightgray;
+  border: none;
+  border-radius: 10%;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.9);
+}
+.paella-profile-button:hover {
+  background-color: #9b9b9b;
+}
+.paella-profile-button:active {
+  background-color: #000000;
+}
 .buttonPlugin.AirPlayButton {
   background-position: -1100% -100%;
 }
@@ -3465,6 +3498,9 @@ input[type=range]:focus::-ms-fill-upper {
 }
 .buttonPlugin.legal:hover {
   background-color: transparent !important;
+}
+.buttonPlugin.showEditorButton {
+  pointer-events: all;
 }
 .buttonPlugin.PIPModeButton {
   background-position: -1000% -100%;
