@@ -3499,11 +3499,11 @@ input[type=range]:focus::-ms-fill-upper {
 .buttonPlugin.legal:hover {
   background-color: transparent !important;
 }
-.buttonPlugin.showEditorButton {
-  pointer-events: all;
-}
 .buttonPlugin.PIPModeButton {
   background-position: -1000% -100%;
+}
+.buttonPlugin.showEditorButton {
+  pointer-events: all;
 }
 .buttonPluginPopUp.videoZoomToolbar {
   width: 50px;
