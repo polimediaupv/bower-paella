@@ -324,8 +324,7 @@ Class ("base.UserAgent",{
 			this.browser.Version.versionString = RegExp.$1;
 		}
 
-		this.browser.Chrome = /Chrome\/([\d\.]+) Safari\//.test(userAgentString) ||
-							  /Chrome\/([\d\.]+) Electron\//.test(userAgentString);
+		this.browser.Chrome = /Chrome\/([\d\.]+) Safari\//.test(userAgentString);
 		if (this.browser.Chrome) {
 			this.browser.Name = "Chrome";
 			this.browser.Vendor = "Google";
@@ -728,8 +727,8 @@ base.parameters = {
 			var url = window.location.href;
 			this.list = {};
 			
-			if (/(http|https|file)?:\/\/([a-z0-9.\-_\/\~:]*\?)([a-z0-9.\/\-_\%\=\&]*)\#*/i.test(url)) {
-				var params = RegExp.$3;
+			if (/https?:\/\/([a-z0-9.\-_\/\~:]*\?)([a-z0-9.\/\-_\%\=\&]*)\#*/i.test(url)) {
+				var params = RegExp.$2;
 				var paramArray = params.split('&');
 				this.list = {};
 				for (var i=0; i<paramArray.length;++i) {
@@ -1034,6 +1033,7 @@ base.ajax = {
 		var ajaxObj = jQuery.ajax({
 			url:params.url,
 			data:params.params,
+			cache:false,
 			type:type
 		});
 
