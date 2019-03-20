@@ -41,7 +41,8 @@
 					}
 				]
 			},
-			"preview": "https://repository.paellaplayer.upv.es/belmar-multiresolution/preview/presenter_cut.jpg"
+			"preview": "https://repository.paellaplayer.upv.es/belmar-multiresolution/preview/presenter_cut.jpg",
+			"content":"presentation"
 		}
 	],
 	"frameList": [
