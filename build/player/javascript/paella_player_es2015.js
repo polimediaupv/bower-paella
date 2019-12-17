@@ -22,7 +22,7 @@ var GlobalParams = {
 
 window.paella = window.paella || {};
 paella.player = null;
-paella.version = "6.3.1 - build: 6b43877";
+paella.version = "6.3.2 - build: 15b5472";
 
 (function buildBaseUrl() {
 	if (window.paella_debug_baseUrl) {
@@ -2540,7 +2540,6 @@ class Html5Video extends paella.VideoElementBase {
 	constructor(id,stream,left,top,width,height,streamName) {
 		super(id,stream,'video',left,top,width,height);
 
-		this._posterFrame = null;
 		this._currentQuality = null;
 		this._autoplay = false;
 
@@ -16811,8 +16810,9 @@ paella.addPlugin(function() {
             function checkVisibility() {
                 let buttons = $('.videoZoomButton');
                 let thumbs = $('.videoZoom');
+                let showButtons = this.config.showButtons!==undefined ? this.config.showButtons : true;
                 if (this._visible && this._available) {
-                    buttons.show();    
+                    showButtons ? buttons.show() : buttons.hide();
                     thumbs.show();
                 }
                 else {

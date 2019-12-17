@@ -47,7 +47,7 @@ var GlobalParams = {
 };
 window.paella = window.paella || {};
 paella.player = null;
-paella.version = "6.3.1 - build: 6b43877";
+paella.version = "6.3.2 - build: 15b5472";
 
 (function buildBaseUrl() {
   if (window.paella_debug_baseUrl) {
@@ -3314,7 +3314,6 @@ function paella_DeferredNotImplemented() {
       _classCallCheck(this, Html5Video);
 
       _this25 = _possibleConstructorReturn(this, _getPrototypeOf(Html5Video).call(this, id, stream, 'video', left, top, width, height));
-      _this25._posterFrame = null;
       _this25._currentQuality = null;
       _this25._autoplay = false;
       _this25._streamName = streamName || 'mp4';
@@ -21637,9 +21636,10 @@ paella.addPlugin(function () {
           function checkVisibility() {
             var buttons = $('.videoZoomButton');
             var thumbs = $('.videoZoom');
+            var showButtons = this.config.showButtons !== undefined ? this.config.showButtons : true;
 
             if (this._visible && this._available) {
-              buttons.show();
+              showButtons ? buttons.show() : buttons.hide();
               thumbs.show();
             } else {
               buttons.hide();
