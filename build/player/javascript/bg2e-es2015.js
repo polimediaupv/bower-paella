@@ -1,6 +1,6 @@
 
 const bg = {};
-bg.version = "1.3.31 - build: 2e48aa1";
+bg.version = "1.3.26 - build: a4e6494";
 bg.utils = {};
 
 Reflect.defineProperty = Reflect.defineProperty || Object.defineProperty;
@@ -397,48 +397,7 @@ Reflect.defineProperty = Reflect.defineProperty || Object.defineProperty;
 		loadVideo(url,onSuccess,onFail) {}
 	}
 
-	let g_videoLoaders = {};
-	g_videoLoaders["mp4"] = function(url,onSuccess,onFail) {
-		var video = document.createElement('video');
-		s_preventVideoDump.push(video);
-		video.crossOrigin = "";
-		video.autoplay = true;
-		video.setAttribute("playsinline",null);
-		video.addEventListener('canplay',(evt) => {
-			let videoIndex = s_preventVideoDump.indexOf(evt.target);
-			if (videoIndex!=-1) {
-				s_preventVideoDump.splice(videoIndex,1);
-			}
-			onSuccess(event.target);
-		});
-		video.addEventListener("error",(evt) => {
-			onFail(new Error(`Error loading video: ${url}`));
-		});
-		video.addEventListener("abort",(evt) => {
-			onFail(new Error(`Error loading video: ${url}`));
-		});
-		video.src = url;
-	}
-	g_videoLoaders["m4v"] = g_videoLoaders["mp4"];
-
 	class HTTPResourceProvider extends ResourceProvider {
-		static AddVideoLoader(type,callback) {
-			g_videoLoaders[type] = callback;
-		}
-
-		static GetVideoLoaderForType(type) {
-			return g_videoLoaders[type];
-		}
-
-		static GetCompatibleVideoFormats() {
-			return Object.keys(g_videoLoaders);
-		}
-
-		static IsVideoCompatible(videoUrl) {
-			let ext = Resource.GetExtension(videoUrl);
-			return bg.utils.HTTPResourceProvider.GetCompatibleVideoFormats().indexOf(ext)!=-1;
-		}
-
 		getRequest(url,onSuccess,onFail,onProgress) {
 			var req = new XMLHttpRequest();
 			if (!onProgress) {
@@ -485,14 +444,25 @@ Reflect.defineProperty = Reflect.defineProperty || Object.defineProperty;
 		}
 
 		loadVideo(url,onSuccess,onFail) {
-			let ext = Resource.GetExtension(url);
-			let loader = bg.utils.HTTPResourceProvider.GetVideoLoaderForType(ext);
-			if (loader) {
-				loader.apply(this,[url,onSuccess,onFail]);
-			}
-			else {
-				onFail(new Error(`Could not find video loader for resource: ${ url }`));
-			}
+			var video = document.createElement('video');
+			s_preventVideoDump.push(video);
+			video.crossOrigin = "";
+			video.autoplay = true;
+			video.setAttribute("playsinline",null);
+			video.addEventListener('canplay',(evt) => {
+				let videoIndex = s_preventVideoDump.indexOf(evt.target);
+				if (videoIndex!=-1) {
+					s_preventVideoDump.splice(videoIndex,1);
+				}
+				onSuccess(event.target);
+			});
+			video.addEventListener("error",(evt) => {
+				onFail(new Error(`Error loading video: ${url}`));
+			});
+			video.addEventListener("abort",(evt) => {
+				onFail(new Error(`Error loading video: ${url}`));
+			});
+			video.src = url;
 		}
 	}
 
@@ -9840,9 +9810,6 @@ bg.scene = {};
 			}
 
 			this.forEach((plist,mat,trx) => {
-				if (!plist.visible) {
-					return;
-				}
 				if (trx) {
 					modelMatrixStack.push();
 					modelMatrixStack.mult(trx);
@@ -12194,10 +12161,7 @@ bg.scene = {};
 
 			if (this._componentData) {
 				console.log("Component data found");
-				let baseUrl = url;
-				if (bg.isElectronApp) {
-					baseUrl = bg.base.Writer.StandarizePath(url);
-				}
+				let baseUrl = bg.base.Writer.StandarizePath(url);
 				baseUrl = baseUrl.split("/");
 				baseUrl.pop();
 				baseUrl = baseUrl.join("/");
@@ -16959,7 +16923,7 @@ bg.webgl1 = {};
 		
 		clearBuffers(context,color,buffers) {
 			context.clearColor(color.r,color.g,color.b,color.a);
-			if (buffers) context.clear(buffers);
+			context.clear(buffers);
 		}
 		
 		setDepthTestEnabled(context,e) {
