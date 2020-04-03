@@ -63,7 +63,7 @@ var GlobalParams = {
 };
 window.paella = window.paella || {};
 paella.player = null;
-paella.version = "6.4.0 - build: fe12c45";
+paella.version = "6.5.0 - build: 7436db9";
 
 (function buildBaseUrl() {
   if (window.paella_debug_baseUrl) {
@@ -18168,7 +18168,16 @@ paella.addPlugin(function () {
 
         return this._deferredAction(function () {
           if (base.userAgent.system.iOS) {
-            return _this176.video.audioTracks;
+            var result = [];
+            Array.from(_this176.video.audioTracks).forEach(function (t) {
+              result.push({
+                id: t.id,
+                groupId: "",
+                name: t.label,
+                lang: t.language
+              });
+            });
+            return result;
           } else {
             return _this176._hls.audioTracks;
           }
@@ -18181,14 +18190,16 @@ paella.addPlugin(function () {
 
         return this._deferredAction(function () {
           if (base.userAgent.system.iOS) {
-            if (_this177.video.audioTracks.some(function (track) {
-              return track.id == trackId;
-            })) {
-              _this177.video.audioTrack = trackId;
-              return true;
-            } else {
-              return false;
-            }
+            var found = false;
+            Array.from(_this177.video.audioTracks).forEach(function (track) {
+              if (track.id == trackId) {
+                found = true;
+                track.enabled = true;
+              } else {
+                track.enabled = false;
+              }
+            });
+            return found;
           } else {
             if (_this177._hls.audioTracks.some(function (track) {
               return track.id == trackId;
@@ -18209,14 +18220,12 @@ paella.addPlugin(function () {
         return this._deferredAction(function () {
           if (base.userAgent.system.iOS) {
             var result = null;
-
-            _this178.video.audioTracks.some(function (t) {
-              if (t.id == _this178.video.audioTrack) {
+            Array.from(_this178.video.audioTracks).some(function (t) {
+              if (t.enabled) {
                 result = t;
                 return true;
               }
             });
-
             return result;
           } else {
             var _result = null;
