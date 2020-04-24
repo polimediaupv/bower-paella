@@ -22,7 +22,7 @@ var GlobalParams = {
 
 window.paella = window.paella || {};
 paella.player = null;
-paella.version = "6.5.0 - build: 7436db9";
+paella.version = "6.4.2 - build: 080c043";
 
 (function buildBaseUrl() {
 	if (window.paella_debug_baseUrl) {
@@ -14183,13 +14183,10 @@ paella.addPlugin(function() {
 					$(this.video).bind('loadedmetadata',eventFunction);
 					let timerFunction = () => {
 						if (!this.ready) {
-							console.debug("HLS video resume failed. Trying to recover.");
-							if (this._hls) {
-								this._hls.recoverMediaError();
-							}
-							else {
+							if (!this._hls) {
 								// iOS
 								// In this way the recharge is forced, and it is possible to recover errors.
+								console.debug("HLS video resume failed. Trying to recover.");
 								let src = this.video.innerHTML;
 								this.video.innerHTML = "";
 								this.video.innerHTML = src;
