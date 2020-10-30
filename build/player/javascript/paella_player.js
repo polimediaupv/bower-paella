@@ -22,7 +22,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function () { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
@@ -63,7 +63,7 @@ var GlobalParams = {
 };
 window.paella = window.paella || {};
 paella.player = null;
-paella.version = "6.4.3 - build: d53b311";
+paella.version = "6.4.4 - build: ded58ac";
 
 (function buildBaseUrl() {
   if (window.paella_debug_baseUrl) {
@@ -4775,7 +4775,7 @@ function paella_DeferredNotImplemented() {
       value: function setVisible(visible, animate) {
         var _this63 = this;
 
-        if (_typeof(visible == "string")) {
+        if (typeof visible == "string") {
           visible = /true/i.test(visible) ? true : false;
         }
 
@@ -6817,7 +6817,9 @@ function paella_DeferredNotImplemented() {
         var swapFocus = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
         var container = this.containers[identifier];
 
-        _hideContainer.apply(this, [identifier, container, swapFocus]);
+        if (container) {
+          _hideContainer.apply(this, [identifier, container, swapFocus]);
+        }
       }
     }, {
       key: "showContainer",
@@ -8099,7 +8101,7 @@ function paella_DeferredNotImplemented() {
                 sourceElem.src = stream.src;
                 sourceElem.type = stream.type;
                 video.load();
-                video.playbackRate = video._playbackRate || 1;
+                video.playbackRate = videoPlugin._playbackRate || 1;
                 cbResolve();
               });
             };
@@ -19427,7 +19429,7 @@ paella.addPlugin(function () {
       key: "pause",
       value: function pause() {
         this.isPlaying = false;
-        this.showIcon = true;
+        this.showIcon = this.config.showOnPause;
         this.checkStatus();
       }
     }, {

@@ -22,7 +22,7 @@ var GlobalParams = {
 
 window.paella = window.paella || {};
 paella.player = null;
-paella.version = "6.4.3 - build: d53b311";
+paella.version = "6.4.4 - build: ded58ac";
 
 (function buildBaseUrl() {
 	if (window.paella_debug_baseUrl) {
@@ -3702,7 +3702,7 @@ class VideoWrapper extends paella.DomNode {
 	}
 
 	setVisible(visible,animate) {
-		if (typeof(visible=="string")) {
+		if (typeof(visible)=="string") {
 			visible = /true/i.test(visible) ? true : false;
 		}
 		if (visible && animate) {
@@ -5333,7 +5333,9 @@ class PopUpContainer extends paella.DomNode {
 
 	hideContainer(identifier, button, swapFocus = false) {
 		var container = this.containers[identifier];
-		hideContainer.apply(this,[identifier,container,swapFocus]);
+		if (container) {
+			hideContainer.apply(this,[identifier,container,swapFocus]);
+		}
 	}
 
 	showContainer(identifier, button, swapFocus = false) {
@@ -6316,7 +6318,7 @@ paella.EventDrivenPlugin = EventDrivenPlugin;
                             sourceElem.src = stream.src;
                             sourceElem.type = stream.type;
                             video.load();
-                            video.playbackRate = video._playbackRate || 1;
+                            video.playbackRate = videoPlugin._playbackRate || 1;
                             cbResolve();
                         })
                     };
@@ -15204,7 +15206,7 @@ paella.addPlugin(function() {
 	
 		pause() {
 			this.isPlaying = false;
-			this.showIcon = true;
+			this.showIcon = this.config.showOnPause;
 			this.checkStatus();
 		}
 	
