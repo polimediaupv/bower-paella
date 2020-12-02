@@ -63,7 +63,7 @@ var GlobalParams = {
 };
 window.paella = window.paella || {};
 paella.player = null;
-paella.version = "6.4.4 - build: ded58ac";
+paella.version = "6.4.5 - build: 080eb0d";
 
 (function buildBaseUrl() {
   if (window.paella_debug_baseUrl) {
@@ -1635,6 +1635,9 @@ function paella_DeferredNotImplemented() {
     });
   }
 
+  var profileReloadCount = 0;
+  var maxProfileReloadCunt = 20;
+
   var Profiles = /*#__PURE__*/function () {
     function Profiles() {
       var _this10 = this;
@@ -1701,11 +1704,17 @@ function paella_DeferredNotImplemented() {
           var profileData = this.loadProfile(profileName) || g_profiles.length > 0 && g_profiles[0];
 
           if (!profileData && g_profiles.length == 0) {
-            // Try to load the profile again later, maybe the profiles are not loaded yet
-            setTimeout(function () {
-              _this11.setProfile(profileName, animate);
-            }, 100);
-            return false;
+            if (profileReloadCount < maxProfileReloadCunt) {
+              profileReloadCount++; // Try to load the profile again later, maybe the profiles are not loaded yet
+
+              setTimeout(function () {
+                _this11.setProfile(profileName, animate);
+              }, 100);
+              return false;
+            } else {
+              console.error("No valid video layout profiles were found. Check that the 'content' attribute setting in 'videoSets', at config.json file, matches the 'content' property in the video manifest.");
+              return false;
+            }
           } else {
             this._currentProfileName = profileName;
             applyProfileWithJson.apply(paella.player.videoContainer, [profileData, animate]);
@@ -5565,7 +5574,11 @@ function paella_DeferredNotImplemented() {
         this.stopVideoSync();
         console.debug("Start sync to player:");
         console.debug(this._syncProviderPlayer);
-        var maxDiff = 0.3;
+        var maxDiff = 0.1;
+        var totalTime = 0;
+        var numberOfSyncs = 0;
+        var syncFrequency = 0;
+        var maxSyncFrequency = 0.2;
 
         var sync = function sync() {
           _this77._syncProviderPlayer.currentTime().then(function (t) {
@@ -5573,11 +5586,19 @@ function paella_DeferredNotImplemented() {
               if (player != syncProviderPlayer && player.currentTimeSync != null && Math.abs(player.currentTimeSync - t) > maxDiff) {
                 console.debug("Sync player current time: ".concat(player.currentTimeSync, " to time ").concat(t));
                 console.debug(player);
+                ++numberOfSyncs;
                 player.setCurrentTime(t);
+
+                if (syncFrequency > maxSyncFrequency) {
+                  maxDiff *= 1.5;
+                  console.log("Maximum syncrhonization frequency reached. Increasing max difference syncronization time to ".concat(maxDiff));
+                }
               }
             });
           });
 
+          totalTime += 1000;
+          syncFrequency = numberOfSyncs / (totalTime / 1000);
           _this77._syncTimer = setTimeout(function () {
             return sync();
           }, 1000);
@@ -13008,9 +13029,308 @@ paella.addPlugin(function () {
             });
 
             if (streamCount >= 2) {
+              var nextLayout = function nextLayout() {
+                var selectedLayout = JSON.parse(JSON.stringify(layouts[layout]));
+                layout = (layout + 1) % layouts.length;
+                selectedLayout.videos[0].content = validContent[0];
+                selectedLayout.videos[1].content = validContent[1];
+                return selectedLayout;
+              };
+
               onSuccess(true);
+              var layout = 0;
+              var layouts = [// First layout: side by side
+              {
+                videos: [{
+                  content: null,
+                  rect: [{
+                    aspectRatio: "16/9",
+                    left: 712,
+                    top: 302,
+                    width: 560,
+                    height: 315
+                  }, {
+                    aspectRatio: "16/10",
+                    left: 712,
+                    top: 267,
+                    width: 560,
+                    height: 350
+                  }, {
+                    aspectRatio: "4/3",
+                    left: 712,
+                    top: 198,
+                    width: 560,
+                    height: 420
+                  }, {
+                    aspectRatio: "5/3",
+                    left: 712,
+                    top: 281,
+                    width: 560,
+                    height: 336
+                  }, {
+                    aspectRatio: "5/4",
+                    left: 712,
+                    top: 169,
+                    width: 560,
+                    height: 448
+                  }],
+                  visible: true,
+                  layer: 1
+                }, {
+                  content: null,
+                  rect: [{
+                    aspectRatio: "16/9",
+                    left: 10,
+                    top: 225,
+                    width: 695,
+                    height: 390
+                  }, {
+                    aspectRatio: "16/10",
+                    left: 10,
+                    top: 183,
+                    width: 695,
+                    height: 434
+                  }, {
+                    aspectRatio: "4/3",
+                    left: 10,
+                    top: 96,
+                    width: 695,
+                    height: 521
+                  }, {
+                    aspectRatio: "5/3",
+                    left: 10,
+                    top: 200,
+                    width: 695,
+                    height: 417
+                  }, {
+                    aspectRatio: "5/4",
+                    left: 10,
+                    top: 62,
+                    width: 695,
+                    height: 556
+                  }],
+                  visible: true,
+                  layer: "1"
+                }],
+                buttons: [{
+                  rect: {
+                    left: 682,
+                    top: 565,
+                    width: 45,
+                    height: 45
+                  },
+                  label: "Switch",
+                  icon: "icon_rotate.svg",
+                  layer: 2
+                }, {
+                  rect: {
+                    left: 682,
+                    top: 515,
+                    width: 45,
+                    height: 45
+                  },
+                  label: "Minimize",
+                  icon: "minimize.svg",
+                  layer: 2
+                }]
+              }, // Second layout: PIP left
+              {
+                videos: [{
+                  content: null,
+                  rect: [{
+                    aspectRatio: "16/9",
+                    left: 0,
+                    top: 0,
+                    width: 1280,
+                    height: 720
+                  }, {
+                    aspectRatio: "16/10",
+                    left: 64,
+                    top: 0,
+                    width: 1152,
+                    height: 720
+                  }, {
+                    aspectRatio: "5/3",
+                    left: 40,
+                    top: 0,
+                    width: 1200,
+                    height: 720
+                  }, {
+                    aspectRatio: "5/4",
+                    left: 190,
+                    top: 0,
+                    width: 900,
+                    height: 720
+                  }, {
+                    aspectRatio: "4/3",
+                    left: 160,
+                    top: 0,
+                    width: 960,
+                    height: 720
+                  }],
+                  visible: true,
+                  layer: 1
+                }, {
+                  content: null,
+                  rect: [{
+                    aspectRatio: "16/9",
+                    left: 50,
+                    top: 470,
+                    width: 350,
+                    height: 197
+                  }, {
+                    aspectRatio: "16/10",
+                    left: 50,
+                    top: 448,
+                    width: 350,
+                    height: 219
+                  }, {
+                    aspectRatio: "5/3",
+                    left: 50,
+                    top: 457,
+                    width: 350,
+                    height: 210
+                  }, {
+                    aspectRatio: "5/4",
+                    left: 50,
+                    top: 387,
+                    width: 350,
+                    height: 280
+                  }, {
+                    aspectRatio: "4/3",
+                    left: 50,
+                    top: 404,
+                    width: 350,
+                    height: 262
+                  }],
+                  visible: true,
+                  layer: 2
+                }],
+                buttons: [{
+                  rect: {
+                    left: 388,
+                    top: 465,
+                    width: 45,
+                    height: 45
+                  },
+                  label: "Switch",
+                  icon: "icon_rotate.svg",
+                  layer: 2
+                }, {
+                  rect: {
+                    left: 388,
+                    top: 415,
+                    width: 45,
+                    height: 45
+                  },
+                  label: "Switch",
+                  icon: "minimize.svg",
+                  layer: 2
+                }]
+              }, // Third layout: PIP right
+              {
+                videos: [{
+                  content: null,
+                  rect: [{
+                    aspectRatio: "16/9",
+                    left: 0,
+                    top: 0,
+                    width: 1280,
+                    height: 720
+                  }, {
+                    aspectRatio: "16/10",
+                    left: 64,
+                    top: 0,
+                    width: 1152,
+                    height: 720
+                  }, {
+                    aspectRatio: "5/3",
+                    left: 40,
+                    top: 0,
+                    width: 1200,
+                    height: 720
+                  }, {
+                    aspectRatio: "5/4",
+                    left: 190,
+                    top: 0,
+                    width: 900,
+                    height: 720
+                  }, {
+                    aspectRatio: "4/3",
+                    left: 160,
+                    top: 0,
+                    width: 960,
+                    height: 720
+                  }],
+                  visible: true,
+                  layer: 1
+                }, {
+                  content: null,
+                  rect: [{
+                    aspectRatio: "16/9",
+                    left: 880,
+                    top: 470,
+                    width: 350,
+                    height: 197
+                  }, {
+                    aspectRatio: "16/10",
+                    left: 880,
+                    top: 448,
+                    width: 350,
+                    height: 219
+                  }, {
+                    aspectRatio: "5/3",
+                    left: 880,
+                    top: 457,
+                    width: 350,
+                    height: 210
+                  }, {
+                    aspectRatio: "5/4",
+                    left: 880,
+                    top: 387,
+                    width: 350,
+                    height: 280
+                  }, {
+                    aspectRatio: "4/3",
+                    left: 880,
+                    top: 404,
+                    width: 350,
+                    height: 262
+                  }],
+                  visible: true,
+                  layer: 2
+                }],
+                buttons: [{
+                  rect: {
+                    left: 848,
+                    top: 465,
+                    width: 45,
+                    height: 45
+                  },
+                  onClick: function onClick() {
+                    this["switch"]();
+                  },
+                  label: "Switch",
+                  icon: "icon_rotate.svg",
+                  layer: 2
+                }, {
+                  rect: {
+                    left: 848,
+                    top: 415,
+                    width: 45,
+                    height: 45
+                  },
+                  onClick: function onClick() {
+                    this.switchMinimize();
+                  },
+                  label: "Switch",
+                  icon: "minimize.svg",
+                  layer: 2
+                }]
+              }];
               paella.addProfile(function () {
-                return new Promise(function (resolve, reject) {
+                var selectedLayout = nextLayout();
+                return new Promise(function (resolve) {
                   resolve({
                     id: videoSet.id,
                     name: {
@@ -13018,77 +13338,7 @@ paella.addPlugin(function () {
                     },
                     hidden: false,
                     icon: videoSet.icon,
-                    videos: [{
-                      content: validContent[0],
-                      rect: [{
-                        aspectRatio: "16/9",
-                        left: 712,
-                        top: 302,
-                        width: 560,
-                        height: 315
-                      }, {
-                        aspectRatio: "16/10",
-                        left: 712,
-                        top: 267,
-                        width: 560,
-                        height: 350
-                      }, {
-                        aspectRatio: "4/3",
-                        left: 712,
-                        top: 198,
-                        width: 560,
-                        height: 420
-                      }, {
-                        aspectRatio: "5/3",
-                        left: 712,
-                        top: 281,
-                        width: 560,
-                        height: 336
-                      }, {
-                        aspectRatio: "5/4",
-                        left: 712,
-                        top: 169,
-                        width: 560,
-                        height: 448
-                      }],
-                      visible: true,
-                      layer: 1
-                    }, {
-                      content: validContent[1],
-                      rect: [{
-                        aspectRatio: "16/9",
-                        left: 10,
-                        top: 225,
-                        width: 695,
-                        height: 390
-                      }, {
-                        aspectRatio: "16/10",
-                        left: 10,
-                        top: 183,
-                        width: 695,
-                        height: 434
-                      }, {
-                        aspectRatio: "4/3",
-                        left: 10,
-                        top: 96,
-                        width: 695,
-                        height: 521
-                      }, {
-                        aspectRatio: "5/3",
-                        left: 10,
-                        top: 200,
-                        width: 695,
-                        height: 417
-                      }, {
-                        aspectRatio: "5/4",
-                        left: 10,
-                        top: 62,
-                        width: 695,
-                        height: 556
-                      }],
-                      visible: true,
-                      layer: "1"
-                    }],
+                    videos: selectedLayout.videos,
                     background: {
                       content: "slide_professor_paella.jpg",
                       zIndex: 5,
@@ -13112,26 +13362,16 @@ paella.addPlugin(function () {
                       }
                     }],
                     buttons: [{
-                      rect: {
-                        left: 682,
-                        top: 565,
-                        width: 45,
-                        height: 45
-                      },
-                      onClick: function onClick(event) {
+                      rect: selectedLayout.buttons[0].rect,
+                      onClick: function onClick() {
                         this["switch"]();
                       },
                       label: "Switch",
                       icon: "icon_rotate.svg",
                       layer: 2
                     }, {
-                      rect: {
-                        left: 682,
-                        top: 515,
-                        width: 45,
-                        height: 45
-                      },
-                      onClick: function onClick(event) {
+                      rect: selectedLayout.buttons[1].rect,
+                      onClick: function onClick() {
                         this.switchMinimize();
                       },
                       label: "Minimize",
@@ -13147,208 +13387,10 @@ paella.addPlugin(function () {
                       paella.profiles.placeVideos();
                     },
                     switchMinimize: function switchMinimize() {
-                      if (this.minimized) {
-                        this.minimized = false;
-                        this.videos = [{
-                          content: validContent[0],
-                          rect: [{
-                            aspectRatio: "16/9",
-                            left: 712,
-                            top: 302,
-                            width: 560,
-                            height: 315
-                          }, {
-                            aspectRatio: "16/10",
-                            left: 712,
-                            top: 267,
-                            width: 560,
-                            height: 350
-                          }, {
-                            aspectRatio: "4/3",
-                            left: 712,
-                            top: 198,
-                            width: 560,
-                            height: 420
-                          }, {
-                            aspectRatio: "5/3",
-                            left: 712,
-                            top: 281,
-                            width: 560,
-                            height: 336
-                          }, {
-                            aspectRatio: "5/4",
-                            left: 712,
-                            top: 169,
-                            width: 560,
-                            height: 448
-                          }],
-                          visible: true,
-                          layer: 1
-                        }, {
-                          content: validContent[1],
-                          rect: [{
-                            aspectRatio: "16/9",
-                            left: 10,
-                            top: 225,
-                            width: 695,
-                            height: 390
-                          }, {
-                            aspectRatio: "16/10",
-                            left: 10,
-                            top: 183,
-                            width: 695,
-                            height: 434
-                          }, {
-                            aspectRatio: "4/3",
-                            left: 10,
-                            top: 96,
-                            width: 695,
-                            height: 521
-                          }, {
-                            aspectRatio: "5/3",
-                            left: 10,
-                            top: 200,
-                            width: 695,
-                            height: 417
-                          }, {
-                            aspectRatio: "5/4",
-                            left: 10,
-                            top: 62,
-                            width: 695,
-                            height: 556
-                          }],
-                          visible: true,
-                          layer: 2
-                        }];
-                        this.buttons = [{
-                          rect: {
-                            left: 682,
-                            top: 565,
-                            width: 45,
-                            height: 45
-                          },
-                          onClick: function onClick(event) {
-                            this["switch"]();
-                          },
-                          label: "Switch",
-                          icon: "icon_rotate.svg",
-                          layer: 2
-                        }, {
-                          rect: {
-                            left: 682,
-                            top: 515,
-                            width: 45,
-                            height: 45
-                          },
-                          onClick: function onClick(event) {
-                            this.switchMinimize();
-                          },
-                          label: "Minimize",
-                          icon: "minimize.svg",
-                          layer: 2
-                        }];
-                      } else {
-                        this.minimized = true;
-                        this.videos = [{
-                          content: validContent[0],
-                          rect: [{
-                            aspectRatio: "16/9",
-                            left: 0,
-                            top: 0,
-                            width: 1280,
-                            height: 720
-                          }, {
-                            aspectRatio: "16/10",
-                            left: 64,
-                            top: 0,
-                            width: 1152,
-                            height: 720
-                          }, {
-                            aspectRatio: "5/3",
-                            left: 40,
-                            top: 0,
-                            width: 1200,
-                            height: 720
-                          }, {
-                            aspectRatio: "5/4",
-                            left: 190,
-                            top: 0,
-                            width: 900,
-                            height: 720
-                          }, {
-                            aspectRatio: "4/3",
-                            left: 160,
-                            top: 0,
-                            width: 960,
-                            height: 720
-                          }],
-                          visible: true,
-                          layer: 1
-                        }, {
-                          content: validContent[1],
-                          rect: [{
-                            aspectRatio: "16/9",
-                            left: 50,
-                            top: 470,
-                            width: 350,
-                            height: 197
-                          }, {
-                            aspectRatio: "16/10",
-                            left: 50,
-                            top: 448,
-                            width: 350,
-                            height: 219
-                          }, {
-                            aspectRatio: "5/3",
-                            left: 50,
-                            top: 457,
-                            width: 350,
-                            height: 210
-                          }, {
-                            aspectRatio: "5/4",
-                            left: 50,
-                            top: 387,
-                            width: 350,
-                            height: 280
-                          }, {
-                            aspectRatio: "4/3",
-                            left: 50,
-                            top: 404,
-                            width: 350,
-                            height: 262
-                          }],
-                          visible: true,
-                          layer: 2
-                        }];
-                        this.buttons = [{
-                          rect: {
-                            left: 388,
-                            top: 465,
-                            width: 45,
-                            height: 45
-                          },
-                          onClick: function onClick(event) {
-                            this["switch"]();
-                          },
-                          label: "Switch",
-                          icon: "icon_rotate.svg",
-                          layer: 2
-                        }, {
-                          rect: {
-                            left: 388,
-                            top: 415,
-                            width: 45,
-                            height: 45
-                          },
-                          onClick: function onClick(event) {
-                            this.switchMinimize();
-                          },
-                          label: "Switch",
-                          icon: "minimize.svg",
-                          layer: 2
-                        }];
-                      }
-
+                      var newLayout = nextLayout();
+                      this.videos = newLayout.videos;
+                      this.buttons[0].rect = newLayout.buttons[0].rect;
+                      this.buttons[1].rect = newLayout.buttons[1].rect;
                       paella.profiles.placeVideos();
                     }
                   });
@@ -19347,7 +19389,7 @@ paella.addPlugin(function () {
         }, function (data) {
           _this196.showOnEnd = !Array.isArray(data) || data.length == 0;
         });
-        onSuccess(!paella.player.isLiveStream() || base.userAgent.system.Android || base.userAgent.system.iOS || !paella.player.videoContainer.supportAutoplay());
+        onSuccess(true);
       }
     }, {
       key: "getIndex",
