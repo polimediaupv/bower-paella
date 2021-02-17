@@ -22,7 +22,7 @@ var GlobalParams = {
 
 window.paella = window.paella || {};
 paella.player = null;
-paella.version = "6.5.0 - build: 978c889";
+paella.version = "6.5.1 - build: 9e04eb8";
 
 (function buildBaseUrl() {
 	if (window.paella_debug_baseUrl) {
@@ -7523,7 +7523,10 @@ class Caption {
 			url: self._url,
 			cache:false,
 			type: 'get',
-			dataType: "text"
+			dataType: "text",
+			xhrFields: {
+				withCredentials: true
+			}
 		})
 		.then(function(dataRaw){
 			var parser = captionParserManager._formats[self._format];
