@@ -69,7 +69,7 @@ var GlobalParams = {
 };
 window.paella = window.paella || {};
 paella.player = null;
-paella.version = "6.5.2 - build: c0ea9f1";
+paella.version = "6.5.3 - build: 040e01f";
 
 (function buildBaseUrl() {
   if (window.paella_debug_baseUrl) {
@@ -2120,24 +2120,44 @@ paella.utils.uuid = function () {
 
       switch (logLevelParam) {
         case "error":
-          this.setLevel(paella.log.kLevelError);
+          this.setLevel(this.kLevelError);
           break;
 
         case "warning":
-          this.setLevel(paella.log.kLevelWarning);
+          this.setLevel(this.kLevelWarning);
           break;
 
         case "debug":
-          this.setLevel(paella.log.kLevelDebug);
+          this.setLevel(this.kLevelDebug);
           break;
 
         case "log":
-          this.setLevel(paella.log.kLevelLog);
+          this.setLevel(this.kLevelLog);
           break;
       }
     }
 
     _createClass(Log, [{
+      key: "kLevelError",
+      get: function get() {
+        return 1;
+      }
+    }, {
+      key: "kLevelWarning",
+      get: function get() {
+        return 2;
+      }
+    }, {
+      key: "kLevelDebug",
+      get: function get() {
+        return 3;
+      }
+    }, {
+      key: "kLevelLog",
+      get: function get() {
+        return 4;
+      }
+    }, {
       key: "logMessage",
       value: function logMessage(level, message) {
         var prefix = "";
@@ -2198,10 +2218,6 @@ paella.utils.uuid = function () {
     return Log;
   }();
 
-  Log.kLevelError = 1;
-  Log.kLevelWarning = 2;
-  Log.kLevelDebug = 3;
-  Log.kLevelLog = 4;
   paella.log = new Log();
 })();
 
@@ -9422,15 +9438,21 @@ function paella_DeferredNotImplemented() {
     }, {
       key: "reloadCaptions",
       value: function reloadCaptions(next) {
+        var _paella$player$config, _paella$player$config2;
+
         var self = this;
+        var xhrFields = ((_paella$player$config = paella.player.config.captions) === null || _paella$player$config === void 0 ? void 0 : (_paella$player$config2 = _paella$player$config.downloadOptions) === null || _paella$player$config2 === void 0 ? void 0 : _paella$player$config2.xhrFields) || null;
+
+        if (Object.keys(xhrFields).length) {
+          xhrFields = null;
+        }
+
         jQuery.ajax({
           url: self._url,
           cache: false,
           type: 'get',
           dataType: "text",
-          xhrFields: {
-            withCredentials: true
-          }
+          xhrFields: null
         }).then(function (dataRaw) {
           var parser = captionParserManager._formats[self._format];
 
@@ -16008,8 +16030,14 @@ paella.addPlugin(function () {
       key: "parse",
       value: function parse(content, lang, next) {
         var captions = [];
-        var self = this;
-        var xmlDoc = $.parseXML(content);
+        var self = this; //fix malformed xml replacing the malformed characters with blank
+
+        content = content.replace(/[^\x09\x0A\x0D\x20-\xFF\x85\xA0-\uD7FF\uE000-\uFDCF\uFDE0-\uFFFD]/gm, '');
+        content = content.replace(/&\w+;/gmi, '');
+        content = content.replaceAll('<br>', '');
+        var parser = new DOMParser();
+        var xmlDoc = parser.parseFromString(content, "text/xml"); //var xmlDoc = $.parseXML(content);
+
         var xml = $(xmlDoc);
         var g_lang = xml.attr("xml:lang");
         var lls = xml.find("div");
